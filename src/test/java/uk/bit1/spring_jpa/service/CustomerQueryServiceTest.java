@@ -19,6 +19,7 @@ class CustomerQueryServiceTest {
     void listCustomers_returnsPagedProjection() {
         var page = customerQueryService.listCustomers(PageRequest.of(0, 10));
         assertThat(page).isNotNull();
-        // can assert size/content depending on seeded test data
+        // assert size/content depending on seeded test data
+        // multi page prefereable
     }
 }
