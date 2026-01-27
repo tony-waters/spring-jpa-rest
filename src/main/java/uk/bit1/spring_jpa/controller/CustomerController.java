@@ -1,4 +1,4 @@
-package uk.bit1.spring_jpa.web.controller;
+package uk.bit1.spring_jpa.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
