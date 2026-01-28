@@ -30,11 +30,11 @@ class ContactInfoRepositoryTest {
 
     @Test
     void findByEmailIgnoreCase_findsContactInfo() {
-        Customer c = new Customer("Waters", "Tony");
-        ContactInfo info = new ContactInfo("tony@example.com", "07123456789");
-        c.setContactInfo(info);
+        Customer customer = new Customer("Waters", "Tony");
+        ContactInfo contactInfo = new ContactInfo("tony@example.com", "07123456789");
+        customer.setContactInfo(contactInfo);
 
-        entityManager.persist(c);
+        entityManager.persist(customer);
         entityManager.flush();
         entityManager.clear();
 
@@ -51,15 +51,17 @@ class ContactInfoRepositoryTest {
 
     @Test
     void existsByEmailIgnoreCase_returnsTrueWhenPresent() {
-        Customer c = new Customer("Jones", "Belinda");
-        c.setContactInfo(new ContactInfo("belinda@example.com", "07000000000"));
+        Customer customer = new Customer("Jones", "Belinda");
+        customer.setContactInfo(new ContactInfo("belinda@example.com", "07000000000"));
 
-        entityManager.persist(c);
+        entityManager.persist(customer);
         entityManager.flush();
         entityManager.clear();
 
+//        Statistics statistics = getStatistics();
         assertThat(contactInfoRepository.existsByEmailIgnoreCase("BELINDA@EXAMPLE.COM"))
                 .isTrue();
+//        assertThat(statistics.getPrepareStatementCount()).isEqualTo(1); // check only one SELECT statement was issued
 
         assertThat(contactInfoRepository.existsByEmailIgnoreCase("missing@example.com"))
                 .isFalse();

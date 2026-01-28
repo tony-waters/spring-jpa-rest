@@ -12,84 +12,84 @@ import static org.assertj.core.api.Assertions.assertThat;
 class OrphanRemovalJpaTest {
 
     @PersistenceContext
-    EntityManager em;
+    EntityManager entityManager;
 
     @Test
     void orphanRemoval_removingOrderFromCustomer_deletesOrderRow() {
         // create graph
-        Customer c = new Customer("Smith", "Emily");
-        Order o = new Order("Orphan me");
-        c.addOrder(o);
+        Customer customer = new Customer("Smith", "Emily");
+        Order order = new Order("Orphan me");
+        customer.addOrder(order);
 
         // persist only the root; cascade persists the order
-        em.persist(c);
-        em.flush();
+        entityManager.persist(customer);
+        entityManager.flush();
 
-        Long orderId = o.getId();
+        Long orderId = order.getId();
         assertThat(orderId).isNotNull();
 
         // IMPORTANT: operate on managed entities
-        Customer managedCustomer = em.find(Customer.class, c.getId());
-        Order managedOrder = em.find(Order.class, orderId);
+        Customer managedCustomer = entityManager.find(Customer.class, customer.getId());
+        Order managedOrder = entityManager.find(Order.class, orderId);
 
         // remove from the parent's collection (entity method maintains both sides)
         managedCustomer.removeOrder(managedOrder);
 
-        em.flush();
-        em.clear();
+        entityManager.flush();
+        entityManager.clear();
 
         // If orphanRemoval works, the Order row is gone
-        Order deleted = em.find(Order.class, orderId);
+        Order deleted = entityManager.find(Order.class, orderId);
         assertThat(deleted).isNull();
     }
 
     @Test
     void orphanRemoval_removingContactInfoFromCustomer_deletesContactInfoRow() {
-        Customer c = new Customer("Waters", "Tony");
-        ContactInfo info = new ContactInfo("tony@example.com", "07123456789");
-        c.setContactInfo(info); // protected; test is in same package
+        Customer customer = new Customer("Waters", "Tony");
+        ContactInfo contactInfo = new ContactInfo("tony@example.com", "07123456789");
+        customer.setContactInfo(contactInfo); // protected; test is in same package
 
-        em.persist(c);
-        em.flush();
+        entityManager.persist(customer);
+        entityManager.flush();
 
-        Long contactId = info.getId();
+        Long contactId = contactInfo.getId();
         assertThat(contactId).isNotNull();
 
-        Customer managedCustomer = em.find(Customer.class, c.getId());
+        Customer managedCustomer = entityManager.find(Customer.class, customer.getId());
         managedCustomer.setContactInfo(null);
 
-        em.flush();
-        em.clear();
+        entityManager.flush();
+        entityManager.clear();
 
-        ContactInfo deleted = em.find(ContactInfo.class, contactId);
+        ContactInfo deleted = entityManager.find(ContactInfo.class, contactId);
         assertThat(deleted).isNull();
     }
 
     @Test
     void deletingOrder_removesJoinTableRows_order_products() {
         // Products have NO cascade from Order in your mapping, so persist them first
-        Product p1 = new Product("Tea", "Yorkshire");
-        Product p2 = new Product("Biscuits", "Hobnobs");
-        em.persist(p1);
-        em.persist(p2);
+        Product product1 = new Product("Tea", "Yorkshire");
+        Product product2 = new Product("Biscuits", "Hobnobs");
+        entityManager.persist(product1);
+        entityManager.persist(product2);
 
-        Customer c = new Customer("Brown", "Esther");
-        Order o = new Order("Shopping");
-        c.addOrder(o);
+        Customer customer = new Customer("Brown", "Esther");
+        Order order = new Order("Shopping");
+        customer.addOrder(order);
 
         // Owning side adds products -> creates join table rows
-        o.addProduct(p1);
-        o.addProduct(p2);
+        order.addProduct(product1);
+        order.addProduct(product2);
 
         // Persist root; cascade persists the order
-        em.persist(c);
-        em.flush();
+        entityManager.persist(customer);
+        entityManager.flush();
 
-        Long orderId = o.getId();
+        Long orderId = order.getId();
         assertThat(orderId).isNotNull();
 
         // Confirm join table rows exist
-        long before = ((Number) em.createNativeQuery(
+        long before = ((Number) entityManager.createNativeQuery(
                         "select count(*) from order_products where order_id = ?")
                 .setParameter(1, orderId)
                 .getSingleResult()).longValue();
@@ -97,18 +97,18 @@ class OrphanRemovalJpaTest {
         assertThat(before).isEqualTo(2L);
 
         // Trigger deletion of Order via orphanRemoval by removing it from the Customer aggregate
-        Customer managedCustomer = em.find(Customer.class, c.getId());
-        Order managedOrder = em.find(Order.class, orderId);
+        Customer managedCustomer = entityManager.find(Customer.class, customer.getId());
+        Order managedOrder = entityManager.find(Order.class, orderId);
         managedCustomer.removeOrder(managedOrder);
 
-        em.flush();
-        em.clear();
+        entityManager.flush();
+        entityManager.clear();
 
         // Order row should be deleted (orphan removal)
-        assertThat(em.find(Order.class, orderId)).isNull();
+        assertThat(entityManager.find(Order.class, orderId)).isNull();
 
         // Join table rows should also be gone
-        long after = ((Number) em.createNativeQuery(
+        long after = ((Number) entityManager.createNativeQuery(
                         "select count(*) from order_products where order_id = ?")
                 .setParameter(1, orderId)
                 .getSingleResult()).longValue();
@@ -119,53 +119,53 @@ class OrphanRemovalJpaTest {
     @Test
     void deletingProduct_removesJoinTableRows_order_products() {
         // Create and persist products first (no cascade from Order->Product)
-        Product p1 = new Product("Tea", "Yorkshire");
-        Product p2 = new Product("Biscuits", "Hobnobs");
-        em.persist(p1);
-        em.persist(p2);
+        Product product1 = new Product("Tea", "Yorkshire");
+        Product product2 = new Product("Biscuits", "Hobnobs");
+        entityManager.persist(product1);
+        entityManager.persist(product2);
 
-        Customer c = new Customer("Brown", "Esther");
-        Order o = new Order("Shopping");
-        c.addOrder(o);
+        Customer customer = new Customer("Brown", "Esther");
+        Order order = new Order("Shopping");
+        customer.addOrder(order);
 
-        o.addProduct(p1);
-        o.addProduct(p2);
+        order.addProduct(product1);
+        order.addProduct(product2);
 
-        em.persist(c);
-        em.flush();
+        entityManager.persist(customer);
+        entityManager.flush();
 
-        Long orderId = o.getId();
-        Long productId = p1.getId();
+        Long orderId = order.getId();
+        Long productId = product1.getId();
         assertThat(orderId).isNotNull();
         assertThat(productId).isNotNull();
 
-        // Sanity: join rows exist for p1
-        long before = ((Number) em.createNativeQuery(
+        // Sanity: join rows exist for product1
+        long before = ((Number) entityManager.createNativeQuery(
                         "select count(*) from order_products where product_id = ?")
                 .setParameter(1, productId)
                 .getSingleResult()).longValue();
         assertThat(before).isEqualTo(1L);
 
         // Work with managed entities
-        Order managedOrder = em.find(Order.class, orderId);
-        Product managedProduct = em.find(Product.class, productId);
+        Order managedOrder = entityManager.find(Order.class, orderId);
+        Product managedProduct = entityManager.find(Product.class, productId);
 
         // Provider-neutral: break association from owning side first
         managedOrder.removeProduct(managedProduct);
 
-        em.flush();
+        entityManager.flush();
 
         // Now delete the product
-        em.remove(managedProduct);
+        entityManager.remove(managedProduct);
 
-        em.flush();
-        em.clear();
+        entityManager.flush();
+        entityManager.clear();
 
         // Product row should be deleted
-        assertThat(em.find(Product.class, productId)).isNull();
+        assertThat(entityManager.find(Product.class, productId)).isNull();
 
         // Join table rows referencing product_id should be gone
-        long after = ((Number) em.createNativeQuery(
+        long after = ((Number) entityManager.createNativeQuery(
                         "select count(*) from order_products where product_id = ?")
                 .setParameter(1, productId)
                 .getSingleResult()).longValue();

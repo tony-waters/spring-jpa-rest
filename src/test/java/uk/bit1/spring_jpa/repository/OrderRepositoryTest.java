@@ -39,28 +39,28 @@ class OrderRepositoryTest {
 
     @Test
     void findOrdersAndProductCountByCustomerId_countsDistinctProducts() {
-        Product p1 = new Product("Tea", "Yorkshire");
-        Product p2 = new Product("Biscuits", "Hobnobs");
-        entityManager.persist(p1);
-        entityManager.persist(p2);
+        Product product1 = new Product("Tea", "Yorkshire");
+        Product product2 = new Product("Biscuits", "Hobnobs");
+        entityManager.persist(product1);
+        entityManager.persist(product2);
 
-        Customer c = new Customer("Brown", "Esther");
-        Order o1 = new Order("o1");
-        Order o2 = new Order("o2");
-        c.addOrder(o1);
-        c.addOrder(o2);
+        Customer customer = new Customer("Brown", "Esther");
+        Order order1 = new Order("Order #1");
+        Order order2 = new Order("Order #2");
+        customer.addOrder(order1);
+        customer.addOrder(order2);
 
         // o1 has 2 products, o2 has 1
-        o1.addProduct(p1);
-        o1.addProduct(p2);
-        o2.addProduct(p1);
+        order1.addProduct(product1);
+        order1.addProduct(product2);
+        order2.addProduct(product1);
 
-        entityManager.persist(c);
+        entityManager.persist(customer);
         entityManager.flush();
         entityManager.clear();
 
         Statistics statistics = getStatistics();
-        var page = orderRepository.findOrdersAndProductCountByCustomerId(c.getId(), PageRequest.of(0, 10));
+        var page = orderRepository.findOrdersAndProductCountByCustomerId(customer.getId(), PageRequest.of(0, 10));
         assertThat(statistics.getPrepareStatementCount()).isBetween(1L, 2L); // check SELECT count
         assertThat(page.getTotalElements()).isEqualTo(2);
 
@@ -74,23 +74,23 @@ class OrderRepositoryTest {
 
     @Test
     void findOrderIdsByCustomerId_pagesIdsInOrder() {
-        Customer c = new Customer("Jones", "Belinda");
-        Order o1 = new Order("o1");
-        Order o2 = new Order("o2");
-        Order o3 = new Order("o3");
-        c.addOrder(o1);
-        c.addOrder(o2);
-        c.addOrder(o3);
+        Customer customer = new Customer("Jones", "Belinda");
+        Order order1 = new Order("Order #1");
+        Order order2 = new Order("Order #2");
+        Order order3 = new Order("Order #3");
+        customer.addOrder(order1);
+        customer.addOrder(order2);
+        customer.addOrder(order3);
 
-        entityManager.persist(c);
+        entityManager.persist(customer);
         entityManager.flush();
         entityManager.clear();
 
         Statistics statistics = getStatistics();
-        var page1 = orderRepository.findOrderIdsByCustomerId(c.getId(), PageRequest.of(0, 2));
+        var page1 = orderRepository.findOrderIdsByCustomerId(customer.getId(), PageRequest.of(0, 2));
         assertThat(statistics.getPrepareStatementCount()).isBetween(1L, 2L); // check SELECT count
         statistics = getStatistics();
-        var page2 = orderRepository.findOrderIdsByCustomerId(c.getId(), PageRequest.of(1, 2));
+        var page2 = orderRepository.findOrderIdsByCustomerId(customer.getId(), PageRequest.of(1, 2));
         assertThat(statistics.getPrepareStatementCount()).isBetween(1L, 2L); // check SELECT count
 
         assertThat(page1.getContent()).hasSize(2);
@@ -100,28 +100,28 @@ class OrderRepositoryTest {
 
     @Test
     void findOrdersWithProductsByIdIn_fetchesProductsForGivenIds() {
-        Product p1 = new Product("Tea", "Yorkshire");
-        Product p2 = new Product("Biscuits", "Hobnobs");
-        entityManager.persist(p1);
-        entityManager.persist(p2);
+        Product product1 = new Product("Tea", "Yorkshire");
+        Product product2 = new Product("Biscuits", "Hobnobs");
+        entityManager.persist(product1);
+        entityManager.persist(product2);
 
-        Customer c = new Customer("Brown", "Esther");
-        Order o1 = new Order("o1");
-        Order o2 = new Order("o2");
-        c.addOrder(o1);
-        c.addOrder(o2);
+        Customer customer = new Customer("Brown", "Esther");
+        Order order1 = new Order("Order #1");
+        Order order2 = new Order("Order #2");
+        customer.addOrder(order1);
+        customer.addOrder(order2);
 
-        o1.addProduct(p1);
-        o1.addProduct(p2);
-        o2.addProduct(p1);
+        order1.addProduct(product1);
+        order1.addProduct(product2);
+        order2.addProduct(product1);
 
-        entityManager.persist(c);
+        entityManager.persist(customer);
         entityManager.flush();
         entityManager.clear();
 
         // Load ids (simulate step 1)
         Statistics statistics = getStatistics();
-        var idPage = orderRepository.findOrderIdsByCustomerId(c.getId(), PageRequest.of(0, 10));
+        var idPage = orderRepository.findOrderIdsByCustomerId(customer.getId(), PageRequest.of(0, 10));
         assertThat(statistics.getPrepareStatementCount()).isBetween(1L, 2L); // check SELECT count
         List<Long> ids = idPage.getContent();
 

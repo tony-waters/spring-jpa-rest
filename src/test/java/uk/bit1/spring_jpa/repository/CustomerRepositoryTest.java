@@ -40,15 +40,15 @@ class CustomerRepositoryTest {
     @Test
     void findCustomersAndOrderCount_returnsStablePagedProjection() {
         // Aardvark, Zebra to make ordering obvious
-        Customer a = new Customer("Aardvark", "Amy");
-        a.addOrder(new Order("a1"));
-        a.addOrder(new Order("a2"));
+        Customer customerA = new Customer("Aardvark", "Amy");
+        customerA.addOrder(new Order("a1"));
+        customerA.addOrder(new Order("a2"));
 
-        Customer z = new Customer("Zebra", "Zoe");
-        z.addOrder(new Order("z1"));
+        Customer customerZ = new Customer("Zebra", "Zoe");
+        customerZ.addOrder(new Order("z1"));
 
-        entityManager.persist(a);
-        entityManager.persist(z);
+        entityManager.persist(customerA);
+        entityManager.persist(customerZ);
         entityManager.flush();
         entityManager.clear();
 
@@ -110,13 +110,13 @@ class CustomerRepositoryTest {
     void findCustomersAndOrderCount_pagingUsesCountQueryCorrectly() {
         // Create 25 customers, with i orders each for a bit of variety
         for (int i = 0; i < 25; i++) {
-            Customer c = new Customer("Last" + i, "First" + i);
+            Customer customer = new Customer("Last" + i, "First" + i);
             // e.g. 0..2 orders repeating
             int orderCount = i % 3;
             for (int o = 0; o < orderCount; o++) {
-                c.addOrder(new Order("Order " + i + "-" + o));
+                customer.addOrder(new Order("Order " + i + "-" + o));
             }
-            entityManager.persist(c);
+            entityManager.persist(customer);
         }
 
         entityManager.flush();
@@ -145,16 +145,16 @@ class CustomerRepositoryTest {
 
     @Test
     void findWithOrdersAndProductsById_loadsGraph() {
-        Customer c = new Customer("Jones", "Belinda");
-        Order o = new Order("o1");
-        c.addOrder(o);
+        Customer customer = new Customer("Jones", "Belinda");
+        Order order = new Order("o1");
+        customer.addOrder(order);
 
-        entityManager.persist(c);
+        entityManager.persist(customer);
         entityManager.flush();
         entityManager.clear();
 
         Statistics statistics = getStatistics();
-        Customer loaded = customerRepository.findWithOrdersById(c.getId()).orElseThrow();
+        Customer loaded = customerRepository.findWithOrdersById(customer.getId()).orElseThrow();
         assertThat(statistics.getPrepareStatementCount()).isEqualTo(2L);
 
         // Within the test transaction, LAZY would still load, but this at least ensures the query runs
