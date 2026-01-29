@@ -1,7 +1,7 @@
 services:
   spring-api:
     build:
-      context: .   # <-- set this to your Spring project folder
+      context: .
       dockerfile: Dockerfile
     environment:
 #      SPRING_PROFILES_ACTIVE: docker

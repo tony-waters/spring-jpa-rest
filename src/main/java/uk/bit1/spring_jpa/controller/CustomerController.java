@@ -20,6 +20,7 @@ public class CustomerController {
 
     @GetMapping
     public Page<CustomerWithOrderCount> listCustomers(Pageable pageable) {
+//        echo "***** LISTING CUSTOMERS";
         return customerQueryService.listCustomers(pageable);
     }
 }
