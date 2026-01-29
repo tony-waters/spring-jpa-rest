@@ -3,20 +3,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    environment:
-#      SPRING_PROFILES_ACTIVE: docker
-      # optionally force H2 / in-memory for local compose, if you already use it
-      SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
     ports:
       - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
 
   web:
     build:
-      context: ./nextjs-app               # <-- Next.js folder
+      context: ../react-frontend
       dockerfile: Dockerfile
-    environment:
-      SPRING_API_BASE_URL: http://spring-api:8080
     ports:
-      - "3000:3000"
+      - "5173:5173"
+    environment:
+      VITE_API_TARGET: http://spring-api:8080
     depends_on:
       - spring-api
