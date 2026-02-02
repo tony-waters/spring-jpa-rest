@@ -14,7 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 import uk.bit1.spring_jpa.entity.Customer;
 import uk.bit1.spring_jpa.entity.Order;
 import uk.bit1.spring_jpa.entity.Product;
-import uk.bit1.spring_jpa.repository.projection.OrderWithProductCount;
+import uk.bit1.spring_jpa.repository.projection.OrderWithProductCountView;
 
 import java.util.List;
 
@@ -64,11 +64,11 @@ class OrderRepositoryTest {
         assertThat(statistics.getPrepareStatementCount()).isBetween(1L, 2L); // check SELECT count
         assertThat(page.getTotalElements()).isEqualTo(2);
 
-        List<OrderWithProductCount> rows = page.getContent();
+        List<OrderWithProductCountView> rows = page.getContent();
         assertThat(rows).hasSize(2);
 
         // ordered by o.id, so just assert counts appear
-        assertThat(rows).extracting(OrderWithProductCount::getProductCount)
+        assertThat(rows).extracting(OrderWithProductCountView::getProductCount)
                 .containsExactlyInAnyOrder(2L, 1L);
     }
 

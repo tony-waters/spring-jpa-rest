@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.bit1.spring_jpa.repository.CustomerRepository;
-import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCount;
+import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCountView;
 //import uk.bit1.spring_jpa.service.CustomerQueryService;
 
 @Service
@@ -18,7 +18,7 @@ public class CustomerQueryService {
         this.customerRepository = customerRepository;
     }
 
-    public Page<CustomerWithOrderCount> listCustomers(Pageable pageable) {
+    public Page<CustomerWithOrderCountView> listCustomers(Pageable pageable) {
         // Intentionally thin: delegates to repository projection paging
         return customerRepository.findCustomersAndOrderCount(pageable);
     }

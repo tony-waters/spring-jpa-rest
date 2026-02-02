@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import uk.bit1.spring_jpa.entity.Customer;
-import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCount;
+import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCountView;
 
 import java.util.Optional;
 
@@ -37,5 +37,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             """,
             countQuery = "select count(c) from Customer c"
     )
-    Page<CustomerWithOrderCount> findCustomersAndOrderCount(Pageable pageable);
+    Page<CustomerWithOrderCountView> findCustomersAndOrderCount(Pageable pageable);
 }

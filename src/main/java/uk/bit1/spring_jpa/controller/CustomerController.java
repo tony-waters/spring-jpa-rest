@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCount;
+import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCountView;
 import uk.bit1.spring_jpa.service.CustomerQueryService;
 
 @RestController
@@ -19,8 +19,7 @@ public class CustomerController {
     }
 
     @GetMapping
-    public Page<CustomerWithOrderCount> listCustomers(Pageable pageable) {
-//        echo "***** LISTING CUSTOMERS";
+    public Page<CustomerWithOrderCountView> listCustomers(Pageable pageable) {
         return customerQueryService.listCustomers(pageable);
     }
 }

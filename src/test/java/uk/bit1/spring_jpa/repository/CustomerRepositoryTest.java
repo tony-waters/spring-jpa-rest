@@ -14,7 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.TestPropertySource;
 import uk.bit1.spring_jpa.entity.Customer;
 import uk.bit1.spring_jpa.entity.Order;
-import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCount;
+import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCountView;
 
 import java.util.List;
 
@@ -60,8 +60,8 @@ class CustomerRepositoryTest {
 
         assertThat(page.getTotalElements()).isEqualTo(2);
 
-        CustomerWithOrderCount first = page.getContent().get(0);
-        CustomerWithOrderCount second = page.getContent().get(1);
+        CustomerWithOrderCountView first = page.getContent().get(0);
+        CustomerWithOrderCountView second = page.getContent().get(1);
 
         assertThat(first.getLastName()).isEqualTo("Aardvark");
         assertThat(first.getOrderCount()).isEqualTo(2);
@@ -85,21 +85,21 @@ class CustomerRepositoryTest {
         entityManager.clear();
 
         Statistics statistics = getStatistics();
-        Page<CustomerWithOrderCount> page = customerRepository.findCustomersAndOrderCount(PageRequest.of(0, 10));
+        Page<CustomerWithOrderCountView> page = customerRepository.findCustomersAndOrderCount(PageRequest.of(0, 10));
         // hibernate may (depending on implementation) optimise last page and not bother running the SELECT count as it can infer from pages being less than 10
         assertThat(statistics.getPrepareStatementCount()).isBetween(1L, 2L);
         assertThat(page.getTotalElements()).isEqualTo(2);
 
         // Use the projection values; order of rows is undefined unless you ORDER BY in the query.
-        List<CustomerWithOrderCount> rows = page.getContent();
+        List<CustomerWithOrderCountView> rows = page.getContent();
 
-        CustomerWithOrderCount row1 = rows.stream()
+        CustomerWithOrderCountView row1 = rows.stream()
                 .filter(r -> r.getLastName().equals("Alpha"))
                 .findFirst()
                 .orElseThrow();
         assertThat(row1.getOrderCount()).isEqualTo(0);
 
-        CustomerWithOrderCount row2 = rows.stream()
+        CustomerWithOrderCountView row2 = rows.stream()
                 .filter(r -> r.getLastName().equals("Beta"))
                 .findFirst()
                 .orElseThrow();
@@ -123,15 +123,15 @@ class CustomerRepositoryTest {
         entityManager.clear();
 
         Statistics statistics = getStatistics();
-        Page<CustomerWithOrderCount> page0 = customerRepository.findCustomersAndOrderCount(PageRequest.of(0, 10));
+        Page<CustomerWithOrderCountView> page0 = customerRepository.findCustomersAndOrderCount(PageRequest.of(0, 10));
         assertThat(statistics.getPrepareStatementCount()).isEqualTo(2);
 
         statistics = getStatistics();
-        Page<CustomerWithOrderCount> page1 = customerRepository.findCustomersAndOrderCount(PageRequest.of(1, 10));
+        Page<CustomerWithOrderCountView> page1 = customerRepository.findCustomersAndOrderCount(PageRequest.of(1, 10));
         assertThat(statistics.getPrepareStatementCount()).isEqualTo(2);
 
         statistics = getStatistics();
-        Page<CustomerWithOrderCount> page2 = customerRepository.findCustomersAndOrderCount(PageRequest.of(2, 10));
+        Page<CustomerWithOrderCountView> page2 = customerRepository.findCustomersAndOrderCount(PageRequest.of(2, 10));
         // hibernate may (depending on implementation) optimise last page and not bother running the SELECT count as it can infer from pages being less than 10
         assertThat(statistics.getPrepareStatementCount()).isBetween(1L, 2L);
 

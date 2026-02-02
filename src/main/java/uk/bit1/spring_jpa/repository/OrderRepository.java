@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import uk.bit1.spring_jpa.entity.Order;
-import uk.bit1.spring_jpa.repository.projection.OrderWithProductCount;
+import uk.bit1.spring_jpa.repository.projection.OrderWithProductCountView;
 
 import java.util.Optional;
 
@@ -28,7 +28,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
         group by o.id, o.description, o.fulfilled
         order by o.id
         """)
-    Page<OrderWithProductCount> findOrdersAndProductCountByCustomerId(@Param("customerId") Long customerId, Pageable pageable);
+    Page<OrderWithProductCountView> findOrdersAndProductCountByCustomerId(@Param("customerId") Long customerId, Pageable pageable);
 
 //    @Query("""
 //        select distinct o
