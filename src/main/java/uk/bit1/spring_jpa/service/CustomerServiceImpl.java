@@ -4,6 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uk.bit1.spring_jpa.dto.projection.CustomerDetailDto;
+import uk.bit1.spring_jpa.entity.ContactInfo;
+import uk.bit1.spring_jpa.entity.Customer;
 import uk.bit1.spring_jpa.repository.CustomerRepository;
 import uk.bit1.spring_jpa.repository.projection.CustomerDetailView;
 import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCountView;
@@ -11,7 +14,7 @@ import uk.bit1.spring_jpa.repository.projection.OrderWithProductCountView;
 
 @Service
 @Transactional // (readOnly = true)
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl /*implements CustomerService*/ {
 
     private final CustomerRepository customerRepository;
 
@@ -23,29 +26,29 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findCustomersAndOrderCount(pageable);
     }
 
-    @Override
     public Page<OrderWithProductCountView> listOrdersForCustomer(Pageable pageable) {
         return null;
     }
 
-    @Override
     public CustomerDetailView getCustomerDetails(Long id) {
         return null;
     }
 
-    @Override
     public CustomerDetailView updateCustomerDetails(CustomerDetailView customerDetail) {
         return null;
     }
 
-    @Override
     public void deleteCustomerById(Long id) {
 
     }
 
-    @Override
-    public CustomerDetailView addCustomer(CustomerDetailView customerDetail) {
-        return null;
+    public CustomerDetailDto createCustomer(CustomerDetailDto customerDto) {
+        Customer customer = new Customer(customerDto.getLastName(), customerDto.getFirstName());
+        ContactInfo contactInfo = new ContactInfo(customerDto.getEmail(), customerDto.getPhoneNumber());
+        customer.setContactInfo(contactInfo);
+        customerRepository.save(customer);
+        // convert using mappers
+        return customerDto;
     }
 
 
