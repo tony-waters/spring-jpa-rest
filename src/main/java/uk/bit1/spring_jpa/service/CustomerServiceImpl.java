@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uk.bit1.spring_jpa.dto.projection.CustomerDetailDto;
+import uk.bit1.spring_jpa.service.dto.projection.CustomerDetailDto;
 import uk.bit1.spring_jpa.entity.ContactInfo;
 import uk.bit1.spring_jpa.entity.Customer;
 import uk.bit1.spring_jpa.repository.CustomerRepository;

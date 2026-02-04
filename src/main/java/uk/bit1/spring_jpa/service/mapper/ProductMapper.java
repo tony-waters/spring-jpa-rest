@@ -1,11 +1,6 @@
 package uk.bit1.spring_jpa.service.mapper;
 
 import org.mapstruct.Mapper;
-import uk.bit1.spring_jpa.dto.ProductDto;
-import uk.bit1.spring_jpa.entity.Product;
-
-import java.util.List;
-import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {

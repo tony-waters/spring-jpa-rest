@@ -1,11 +1,6 @@
 package uk.bit1.spring_jpa.service.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import uk.bit1.spring_jpa.dto.OrderDto;
-import uk.bit1.spring_jpa.entity.Order;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring", uses = { ProductMapper.class })
 public interface OrderMapper {

@@ -1,4 +1,4 @@
-package uk.bit1.spring_jpa.dto.projection;
+package uk.bit1.spring_jpa.service.dto.projection;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

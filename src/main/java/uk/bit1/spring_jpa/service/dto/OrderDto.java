@@ -1,4 +1,4 @@
-package uk.bit1.spring_jpa.dto;
+package uk.bit1.spring_jpa.service.dto;
 
 import java.util.List;
 
