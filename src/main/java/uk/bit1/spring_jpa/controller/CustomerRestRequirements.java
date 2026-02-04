@@ -15,9 +15,9 @@ public interface CustomerRestRequirements {
 
     CustomerDetailView getCustomerDetails(Long id);
 
-    void updateCustomerDetails(CustomerDetailView customerDetail);
+    CustomerDetailView updateCustomerDetails(CustomerDetailView customerDetail);
 
-    void deleteCustomer(Long id);
+    void deleteCustomerById(Long id);
 
     CustomerDetailView addCustomer(CustomerDetailView customerDetail);
 

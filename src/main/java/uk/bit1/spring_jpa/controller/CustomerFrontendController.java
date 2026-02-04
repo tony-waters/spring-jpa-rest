@@ -36,12 +36,12 @@ public class CustomerFrontendController implements CustomerRestRequirements {
     }
 
     @Override
-    public void updateCustomerDetails(CustomerDetailView customerDetail) {
+    public CustomerDetailView updateCustomerDetails(CustomerDetailView customerDetail) {
 
     }
 
     @Override
-    public void deleteCustomer(Long id) {
+    public void deleteCustomerById(Long id) {
 
     }
 
