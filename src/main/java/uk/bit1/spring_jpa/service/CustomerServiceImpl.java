@@ -8,7 +8,6 @@ import uk.bit1.spring_jpa.repository.CustomerRepository;
 import uk.bit1.spring_jpa.repository.projection.CustomerDetailView;
 import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCountView;
 import uk.bit1.spring_jpa.repository.projection.OrderWithProductCountView;
-//import uk.bit1.spring_jpa.service.CustomerQueryService;
 
 @Service
 @Transactional // (readOnly = true)
