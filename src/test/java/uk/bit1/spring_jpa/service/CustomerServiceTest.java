@@ -9,15 +9,15 @@ import org.springframework.data.domain.PageRequest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Import(CustomerQueryService.class)
-class CustomerQueryServiceTest {
+@Import(CustomerServiceImpl.class)
+class CustomerServiceTest {
 
     @Autowired
-    CustomerQueryService customerQueryService;
+    CustomerServiceImpl customerService;
 
     @Test
     void listCustomers_returnsPagedProjection() {
-        var page = customerQueryService.listCustomers(PageRequest.of(0, 10));
+        var page = customerService.listCustomers(PageRequest.of(0, 10));
         assertThat(page).isNotNull();
         // assert size/content depending on seeded test data
         // multi page prefereable

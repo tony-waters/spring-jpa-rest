@@ -8,44 +8,39 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.bit1.spring_jpa.repository.projection.CustomerDetailView;
 import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCountView;
 import uk.bit1.spring_jpa.repository.projection.OrderWithProductCountView;
-import uk.bit1.spring_jpa.service.CustomerQueryService;
+import uk.bit1.spring_jpa.service.CustomerServiceImpl;
 
 @RestController
 @RequestMapping("/api/customers")
-public class CustomerFrontendController implements CustomerRestRequirements {
+public class CustomerFrontendController {
 
-    private final CustomerQueryService customerQueryService;
+    private final CustomerServiceImpl customerService;
 
-    public CustomerFrontendController(CustomerQueryService customerQueryService) {
-        this.customerQueryService = customerQueryService;
+    public CustomerFrontendController(CustomerServiceImpl customerService) {
+        this.customerService = customerService;
     }
 
     @GetMapping
     public Page<CustomerWithOrderCountView> listCustomers(Pageable pageable) {
-        return customerQueryService.listCustomers(pageable);
+        return customerService.listCustomers(pageable);
     }
 
-    @Override
     public Page<OrderWithProductCountView> listOrdersForCustomer(Pageable pageable) {
         return null;
     }
 
-    @Override
     public CustomerDetailView getCustomerDetails(Long id) {
         return null;
     }
 
-    @Override
     public CustomerDetailView updateCustomerDetails(CustomerDetailView customerDetail) {
-
+        return null;
     }
 
-    @Override
     public void deleteCustomerById(Long id) {
 
     }
 
-    @Override
     public CustomerDetailView addCustomer(CustomerDetailView customerDetail) {
         return null;
     }

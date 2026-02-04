@@ -1,4 +1,4 @@
-package uk.bit1.spring_jpa.controller;
+package uk.bit1.spring_jpa.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,7 +7,7 @@ import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCountView;
 import uk.bit1.spring_jpa.repository.projection.OrderWithProductCountView;
 
 // interface needed by current front end
-public interface CustomerRestRequirements {
+public interface CustomerService {
 
     Page<CustomerWithOrderCountView> listCustomers(Pageable pageable);
 
