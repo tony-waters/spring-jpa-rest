@@ -12,11 +12,11 @@ import uk.bit1.spring_jpa.service.CustomerQueryService;
 
 @RestController
 @RequestMapping("/api/customers")
-public class CustomerController implements CustomerRestRequirements {
+public class CustomerFrontendController implements CustomerRestRequirements {
 
     private final CustomerQueryService customerQueryService;
 
-    public CustomerController(CustomerQueryService customerQueryService) {
+    public CustomerFrontendController(CustomerQueryService customerQueryService) {
         this.customerQueryService = customerQueryService;
     }
 
