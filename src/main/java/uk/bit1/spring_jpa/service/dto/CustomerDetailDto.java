@@ -1,22 +1,23 @@
-package uk.bit1.spring_jpa.service.dto.projection;
+package uk.bit1.spring_jpa.service.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import uk.bit1.spring_jpa.repository.projection.CustomerDetailView;
-import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCountView;
 
 // is this the right way to make a DTO from a projection?
 public class CustomerDetailDto /* implements CustomerDetailView */ {
 
     private Long id;
 
+    // should i add this?
+    private String version;
+
     @NotBlank(message = "First Name is required")
-    @Size(min = 2, max = 50, message = "Name must be 2-50 characters")
+    @Size(min = 2, max = 50, message = "First Name must be 2-50 characters")
     private String firstName;
 
     @NotBlank(message = "Last Name is required")
-    @Size(min = 2, max = 50, message = "Name must be 2-50 characters")
+    @Size(min = 2, max = 50, message = "Last Name must be 2-50 characters")
     private String lastName;
 
     @Email(message = "Email must be valid")
@@ -65,5 +66,13 @@ public class CustomerDetailDto /* implements CustomerDetailView */ {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 }
