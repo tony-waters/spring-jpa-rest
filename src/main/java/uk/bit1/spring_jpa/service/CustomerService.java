@@ -2,7 +2,7 @@ package uk.bit1.spring_jpa.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import uk.bit1.spring_jpa.service.dto.CustomerDetailDto;
+import uk.bit1.spring_jpa.service.dto.CustomerDetailUpdateDto;
 import uk.bit1.spring_jpa.repository.projection.CustomerDetailView;
 import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCountView;
 import uk.bit1.spring_jpa.repository.projection.OrderWithProductCountView;
@@ -16,10 +16,10 @@ public interface CustomerService {
 
     CustomerDetailView getCustomerDetails(Long id);
 
-    CustomerDetailDto updateCustomerDetails(Long id, CustomerDetailDto customerDetail);
+    CustomerDetailUpdateDto updateCustomerDetails(Long id, CustomerDetailUpdateDto customerDetail);
 
     void deleteCustomerById(Long id);
 
-    CustomerDetailDto createCustomer(CustomerDetailDto customerDetail);
+    CustomerDetailUpdateDto createCustomer(CustomerDetailUpdateDto customerDetail);
 
 }

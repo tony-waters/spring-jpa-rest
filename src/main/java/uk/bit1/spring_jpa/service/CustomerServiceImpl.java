@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uk.bit1.spring_jpa.service.dto.CustomerDetailDto;
+import uk.bit1.spring_jpa.service.dto.CustomerDetailUpdateDto;
 import uk.bit1.spring_jpa.entity.ContactInfo;
 import uk.bit1.spring_jpa.entity.Customer;
 import uk.bit1.spring_jpa.repository.CustomerRepository;
@@ -44,7 +44,7 @@ public class CustomerServiceImpl /*implements CustomerService*/ {
     }
 
     @Transactional
-    public CustomerDetailDto updateCustomer(long id, CustomerDetailDto dto) {
+    public CustomerDetailUpdateDto updateCustomer(long id, CustomerDetailUpdateDto dto) {
         Customer customer = customerRepository.findById(id).orElseThrow();
 
         // Optional but explicit check
@@ -60,7 +60,8 @@ public class CustomerServiceImpl /*implements CustomerService*/ {
         contactInfo.setPhoneNumber(dto.getPhoneNumber());
 
         // JPA will also enforce @Version on flush
-        return mapToDto(customer);
+//        return mapToDto(customer);
+        return null;
     }
 
 
@@ -68,7 +69,7 @@ public class CustomerServiceImpl /*implements CustomerService*/ {
 
     }
 
-    public CustomerDetailDto createCustomer(CustomerDetailDto customerDto) {
+    public CustomerDetailUpdateDto createCustomer(CustomerDetailUpdateDto customerDto) {
         Customer customer = new Customer(customerDto.getLastName(), customerDto.getFirstName());
         ContactInfo contactInfo = new ContactInfo(customerDto.getEmail(), customerDto.getPhoneNumber());
         customer.setContactInfo(contactInfo);

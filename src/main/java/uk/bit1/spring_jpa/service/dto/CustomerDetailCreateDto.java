@@ -4,12 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class CustomerDetailDto {
-
-    private Long id;
-
-    // should i add this?
-    private Long version;
+public class CustomerDetailCreateDto {
 
     @NotBlank(message = "First Name is required")
     @Size(min = 2, max = 50, message = "First Name must be 2-50 characters")
@@ -26,14 +21,6 @@ public class CustomerDetailDto {
     @NotBlank(message = "Phone Number is required")
     @Size(min = 11, max = 20, message = "Phone Number must be 11-20 characters")
     private String phoneNumber;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -67,11 +54,4 @@ public class CustomerDetailDto {
         this.phoneNumber = phoneNumber;
     }
 
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
 }

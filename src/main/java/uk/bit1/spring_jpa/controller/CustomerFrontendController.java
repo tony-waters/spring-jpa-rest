@@ -10,7 +10,7 @@ import uk.bit1.spring_jpa.repository.projection.CustomerDetailView;
 import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCountView;
 import uk.bit1.spring_jpa.repository.projection.OrderWithProductCountView;
 import uk.bit1.spring_jpa.service.CustomerServiceImpl;
-import uk.bit1.spring_jpa.service.dto.CustomerDetailDto;
+import uk.bit1.spring_jpa.service.dto.CustomerDetailUpdateDto;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -44,7 +44,7 @@ public class CustomerFrontendController {
     }
 
     @PostMapping("/new")
-    public CustomerDetailDto addCustomer(CustomerDetailDto customerDetailDto) {
-        return customerService.createCustomer(customerDetailDto);
+    public CustomerDetailUpdateDto addCustomer(CustomerDetailUpdateDto customerDetailUpdateDto) {
+        return customerService.createCustomer(customerDetailUpdateDto);
     }
 }
