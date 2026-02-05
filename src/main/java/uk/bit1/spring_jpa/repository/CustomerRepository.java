@@ -40,5 +40,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     )
     Page<CustomerWithOrderCountView> findCustomersAndOrderCount(Pageable pageable);
 
+//    Optional<CustomerDetailView> findByContactInfoAn
+
 //    Optional<CustomerDetailView> findByContactInfo_Customer_Id(Long contactInfoCustomerId);
 }

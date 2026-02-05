@@ -19,7 +19,7 @@ class JpaPressureTest {
             // ContactInfo
             ContactInfo ci = new ContactInfo();
             ci.setEmail("user" + c + "@example.com");
-            ci.setPhone("07" + c);
+            ci.setPhoneNumber("07" + c);
             customer.setContactInfo(ci);
 
             // Orders

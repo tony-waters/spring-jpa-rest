@@ -13,29 +13,29 @@ public class ContactInfo extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-    private String phone;
+    private String phoneNumber;
 
     protected ContactInfo() {}
 
-    public ContactInfo(String email, String phone) {
+    public ContactInfo(String email, String phoneNumber) {
         this.email = email;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phone) {
+        this.phoneNumber = phone;
     }
 
     public Customer getCustomer() {

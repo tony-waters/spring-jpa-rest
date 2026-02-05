@@ -4,13 +4,12 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-// is this the right way to make a DTO from a projection?
-public class CustomerDetailDto /* implements CustomerDetailView */ {
+public class CustomerDetailDto {
 
     private Long id;
 
     // should i add this?
-    private String version;
+    private Long version;
 
     @NotBlank(message = "First Name is required")
     @Size(min = 2, max = 50, message = "First Name must be 2-50 characters")
@@ -68,11 +67,11 @@ public class CustomerDetailDto /* implements CustomerDetailView */ {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getVersion() {
+    public Long getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(Long version) {
         this.version = version;
     }
 }

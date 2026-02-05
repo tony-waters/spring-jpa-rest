@@ -12,11 +12,11 @@ public interface CustomerService {
 
     Page<CustomerWithOrderCountView> listCustomers(Pageable pageable);
 
-    Page<OrderWithProductCountView> listOrdersForCustomer(Pageable pageable);
+    Page<OrderWithProductCountView> listOrdersForCustomer(Long id, Pageable pageable);
 
     CustomerDetailView getCustomerDetails(Long id);
 
-    CustomerDetailView updateCustomerDetails(CustomerDetailView customerDetail);
+    CustomerDetailDto updateCustomerDetails(Long id, CustomerDetailDto customerDetail);
 
     void deleteCustomerById(Long id);
 
