@@ -1,10 +1,10 @@
 package uk.bit1.spring_jpa.service;
 
 import uk.bit1.spring_jpa.service.dto.CustomerDetailCreateDto;
-import uk.bit1.spring_jpa.service.dto.CustomerDetailUpdateDto;
+import uk.bit1.spring_jpa.service.dto.CustomerDetailDto;
 
 public interface CustomerCommandService {
-    CustomerDetailCreateDto createCustomer(CustomerDetailCreateDto request);
-    CustomerDetailUpdateDto updateCustomerDetails(long id, CustomerDetailUpdateDto request);
+    CustomerDetailDto createCustomer(CustomerDetailCreateDto request);
+    CustomerDetailDto updateCustomerDetails(long id, CustomerDetailDto request);
     void deleteCustomerById(long id);
 }
