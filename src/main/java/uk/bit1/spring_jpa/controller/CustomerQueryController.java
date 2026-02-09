@@ -19,7 +19,7 @@ public class CustomerQueryController {
 
     @GetMapping
     public Page<CustomerWithOrderCountView> listCustomers(
-            @PageableDefault(size = 20) Pageable pageable) {
+            @PageableDefault(size = 5) Pageable pageable) {
         return customerQueryService.listCustomers(pageable);
     }
 
@@ -31,7 +31,7 @@ public class CustomerQueryController {
     @GetMapping("/{id}/orders")
     public Page<OrderWithProductCountView> listOrdersForCustomer(
             @PathVariable long id,
-            @PageableDefault(size = 20) Pageable pageable) {
+            @PageableDefault(size = 5) Pageable pageable) {
         return customerQueryService.listOrdersForCustomer(id, pageable);
     }
 }
