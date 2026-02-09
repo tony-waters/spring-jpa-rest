@@ -26,22 +26,22 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
         return customerRepository.findAllCustomerWithOrderCount(pageable);
     }
 
-    @Override
-    public CustomerDetailView getCustomerDetails(long id) {
-        return null;
-    }
+//    @Override
+//    public CustomerDetailView getCustomerDetails(long id) {
+//        return null;
+//    }
 
     @Override
     public Page<OrderWithProductCountView> listOrdersForCustomer(long customerId, Pageable pageable) {
         return null;
     }
 
-//    @Override
-//    public CustomerDetailView getCustomerDetails(long id) {
-//        return customerRepository.findCustomerDetailViewById(id)
-//                .orElseThrow(() -> new NotFoundException("Customer not found: " + id));
-//    }
-//
+    @Override
+    public CustomerDetailView getCustomerDetails(long id) {
+        return customerRepository.findWithContactInfoById(id)
+                .orElseThrow(() -> new NotFoundException("Customer", id));
+    }
+
 //    @Override
 //    public Page<OrderWithProductCountView> listOrdersForCustomer(long customerId, Pageable pageable) {
 //        // Optional but nice: fail fast if customer doesn't exist

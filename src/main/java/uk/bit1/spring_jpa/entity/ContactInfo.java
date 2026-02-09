@@ -26,12 +26,12 @@ public class ContactInfo extends BaseEntity {
         return email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public void setPhoneNumber(String phone) {
