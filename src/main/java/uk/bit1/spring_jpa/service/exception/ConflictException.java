@@ -1,7 +1,13 @@
 package uk.bit1.spring_jpa.service.exception;
 
 public class ConflictException extends RuntimeException {
-    public ConflictException(String message, Exception exception) {
-        super(message, exception);
+
+    public ConflictException(String message) {
+        super(message);
+    }
+
+    public ConflictException(String message, Throwable cause) {
+        super(message, cause);
     }
 }
+

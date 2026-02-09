@@ -32,7 +32,7 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
     @Override
     public CustomerDetailDto updateCustomerDetails(long id, CustomerDetailDto request) {
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Customer", id));
+                .orElseThrow(() -> new NotFoundException("Customer not found: id=" + id));
 
         try {
             // MapStruct should copy allowed fields + version
@@ -49,7 +49,7 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
         try {
             customerRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("Customer", id);
+            throw new NotFoundException("Customer not found: id=" + id, e);
         }
     }
 }

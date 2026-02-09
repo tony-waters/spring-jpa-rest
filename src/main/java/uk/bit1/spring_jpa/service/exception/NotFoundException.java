@@ -1,7 +1,12 @@
 package uk.bit1.spring_jpa.service.exception;
 
 public class NotFoundException extends RuntimeException {
-    public NotFoundException(String type, Long id) {
-        super(type + " not found: " + id);
+
+    public NotFoundException(String message) {
+        super(message);
+    }
+
+    public NotFoundException(String message, Throwable cause) {
+        super(message, cause);
     }
 }
