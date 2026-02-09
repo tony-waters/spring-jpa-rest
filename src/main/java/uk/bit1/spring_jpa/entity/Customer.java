@@ -97,16 +97,5 @@ public class Customer extends BaseEntity {
         return "Customer{id=" + getId() + ", firstName=" + firstName + ", lastName=" + lastName +
                 ", orderCount=" + (orders == null ? 0 : orders.size()) + "}";
     }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Customer other)) return false;
-        return getId() != null && getId().equals(other.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 
 }

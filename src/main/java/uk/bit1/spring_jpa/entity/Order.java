@@ -97,16 +97,5 @@ public class Order extends BaseEntity {
                 "Order[id=%d, description='%s']",
                 getId(), description);
     }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Order other)) return false;
-        return getId() != null && getId().equals(other.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 
 }
