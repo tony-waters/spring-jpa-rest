@@ -1,6 +1,7 @@
 package uk.bit1.spring_jpa.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.bit1.spring_jpa.entity.Customer;
@@ -45,9 +46,10 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
 
     @Override
     public void deleteCustomerById(long id) {
-        if (!customerRepository.existsById(id)) {
+        try {
+            customerRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException("Customer", id);
         }
-        customerRepository.deleteById(id);
     }
 }
