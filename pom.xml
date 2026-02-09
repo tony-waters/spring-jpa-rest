@@ -59,6 +59,15 @@
 			<version>${mapstruct.version}</version>
 		</dependency>
 
+		<!-- lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+<!--			<version>1.18.42</version>-->
+<!--			<scope>provided</scope>-->
+			<optional>true</optional>
+		</dependency>
+
 		<!-- Core test bundle -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -96,6 +105,11 @@
 							<groupId>org.mapstruct</groupId>
 							<artifactId>mapstruct-processor</artifactId>
 							<version>${mapstruct.version}</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+<!--							<version>${lombok.version}</version>-->
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
