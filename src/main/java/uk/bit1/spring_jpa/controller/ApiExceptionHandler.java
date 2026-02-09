@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import uk.bit1.spring_jpa.service.exception.ConflictException;
 import uk.bit1.spring_jpa.service.exception.NotFoundException;
 
+import java.time.Instant;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -16,14 +17,24 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleNotFound(NotFoundException ex) {
-        return ex.getMessage();
+    public ApiError handleNotFound(NotFoundException ex) {
+        return new ApiError(
+                HttpStatus.NOT_FOUND.value(),
+                "NOT_FOUND",
+                ex.getMessage(),
+                Instant.now()
+        );
     }
 
     @ExceptionHandler(ConflictException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleConflict(ConflictException ex) {
-        return ex.getMessage();
+    public ApiError handleConflict(ConflictException ex) {
+        return new ApiError(
+                HttpStatus.CONFLICT.value(),
+                "CONFLICT",
+                ex.getMessage(),
+                Instant.now()
+        );
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

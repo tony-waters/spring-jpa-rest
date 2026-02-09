@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.bit1.spring_jpa.repository.CustomerRepository;
-import uk.bit1.spring_jpa.repository.OrderRepository;
+//import uk.bit1.spring_jpa.repository.OrderRepository;
 import uk.bit1.spring_jpa.repository.projection.CustomerDetailView;
 import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCountView;
 import uk.bit1.spring_jpa.repository.projection.OrderWithProductCountView;
@@ -18,7 +18,7 @@ import uk.bit1.spring_jpa.service.exception.NotFoundException;
 public class CustomerQueryServiceImpl implements CustomerQueryService {
 
     private final CustomerRepository customerRepository;
-    private final OrderRepository orderRepository;
+//    private final OrderRepository orderRepository;
 
     @Override
     public Page<CustomerWithOrderCountView> listCustomers(Pageable pageable) {
@@ -39,7 +39,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
     @Override
     public CustomerDetailView getCustomerDetails(long id) {
         return customerRepository.findWithContactInfoById(id)
-                .orElseThrow(() -> new NotFoundException("Customer", id));
+                .orElseThrow(() -> new NotFoundException("Customer or ContactInfo not found for id: " + id));
     }
 
 //    @Override

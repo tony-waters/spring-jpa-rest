@@ -17,6 +17,11 @@ public class ContactInfo extends BaseEntity {
 
     protected ContactInfo() {}
 
+    // public factory method
+    public static ContactInfo create() {
+        return new ContactInfo("", "");
+    }
+
     public ContactInfo(String email, String phoneNumber) {
         this.email = email;
         this.phoneNumber = phoneNumber;

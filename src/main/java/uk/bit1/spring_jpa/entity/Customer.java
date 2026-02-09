@@ -28,11 +28,20 @@ public class Customer extends BaseEntity {
     @Column(name = "first_name")
     private String firstName;
 
-    protected Customer() {}
+    protected Customer() {
+        setContactInfo(ContactInfo.create());
+    }
 
     public Customer(String lastName, String firstName) {
         this.lastName= lastName;
         this.firstName = firstName;
+        setContactInfo(ContactInfo.create());
+    }
+
+    public Customer(String lastName, String firstName, String email, String phoneNumber) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        contactInfo = new ContactInfo(email, phoneNumber);
     }
 
     public void addOrder(Order order) {

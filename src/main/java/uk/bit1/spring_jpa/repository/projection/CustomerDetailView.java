@@ -1,9 +1,14 @@
 package uk.bit1.spring_jpa.repository.projection;
 
 public interface CustomerDetailView {
+    Long getId();
+    String getFirstName();
+    String getLastName();
+    ContactInfoView getContactInfo();
 
-    CustomerView getCustomer();
-    String getEmail();
-    String getPhone();
-
+    interface ContactInfoView {
+        String getEmail();
+        String getPhoneNumber();
+    }
 }
+
