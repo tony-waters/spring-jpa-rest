@@ -1,6 +1,9 @@
 package uk.bit1.spring_jpa.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +14,7 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Customer extends BaseEntity {
 
+    @Valid
     @OneToOne(
             mappedBy = "customer",
             cascade = CascadeType.ALL,
@@ -18,6 +22,7 @@ public class Customer extends BaseEntity {
     )
     private ContactInfo contactInfo; // = new ContactInfo(null, null);
 
+    @Valid
     @OneToMany(
             mappedBy = "customer",
             cascade = CascadeType.ALL,
@@ -26,10 +31,14 @@ public class Customer extends BaseEntity {
     )
     private Set<Order> orders = new HashSet<>();
 
-    @Column(name = "last_name")
+    @NotBlank
+    @Size(min = 2, max = 50)
+    @Column(length = 50, name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "first_name")
+    @NotBlank
+    @Size(min = 2, max = 50)
+    @Column(length = 50, name = "first_name", nullable = false)
     private String firstName;
 
 //    protected Customer() {}

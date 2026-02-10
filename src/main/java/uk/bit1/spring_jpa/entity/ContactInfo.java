@@ -1,6 +1,10 @@
 package uk.bit1.spring_jpa.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -8,24 +12,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ContactInfo extends BaseEntity {
 
-//    @OneToOne
-//    @MapsId
-//    @JoinColumn(name = "id")
+    @Valid
     @OneToOne(optional=false)
     @JoinColumn(name="customer_id", unique=true)
     private Customer customer;
 
-    @Column(nullable = false, unique = true)
+    @Email
+    @Column(length = 320, nullable = false, unique = true)
     private String email;
 
+    @NotBlank
+    @Size(min = 2, max = 50)
+    @Column(length = 50, nullable = false)
     private String phoneNumber;
-
-//    protected ContactInfo() {}
-////    public ContactInfo() {}
-//    // public factory method
-////    public static ContactInfo create() {
-////        return new ContactInfo("", "");
-////    }
 
     public ContactInfo(String email, String phoneNumber) {
         this.email = email;

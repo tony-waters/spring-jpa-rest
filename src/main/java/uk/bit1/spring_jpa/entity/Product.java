@@ -1,6 +1,9 @@
 package uk.bit1.spring_jpa.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -11,14 +14,19 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product extends BaseEntity {
 
+    @Valid
     @ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
     private Set<Order> orders = new HashSet<>();
 
+    @NotBlank
+    @Size(min = 2, max = 255)
+    @Column(length = 255, nullable = false)
     private String name;
-    private String description;
 
-//    protected Product() {
-//    }
+    @NotBlank
+    @Size(min = 2, max = 255)
+    @Column(length = 255, nullable = false)
+    private String description;
 
     public Product(String name, String description) {
         this.name = name;

@@ -1,6 +1,9 @@
 package uk.bit1.spring_jpa.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -12,10 +15,12 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order extends BaseEntity {
 
+    @Valid
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
+    @Valid
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "order_products",
@@ -24,12 +29,12 @@ public class Order extends BaseEntity {
     )
     private Set<Product> products = new HashSet<>();
 
+    @NotBlank
+    @Size(min = 2, max = 255)
+    @Column(length = 255, nullable = false)
     private String description;
 
     private boolean fulfilled = false;
-
-//    protected Order() {
-//    }
 
     public Order(String description) {
         this.description = description;
