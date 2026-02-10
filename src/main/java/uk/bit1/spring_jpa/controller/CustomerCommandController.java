@@ -5,8 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import uk.bit1.spring_jpa.service.CustomerCommandService;
-import uk.bit1.spring_jpa.service.dto.CustomerDetailCreateDto;
-import uk.bit1.spring_jpa.service.dto.CustomerDetailDto;
+import uk.bit1.spring_jpa.service.dto.*;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -17,15 +16,18 @@ public class CustomerCommandController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CustomerDetailDto createCustomer(@Valid @RequestBody CustomerDetailCreateDto request) {
+//    public CustomerDetailDto createCustomer(@Valid @RequestBody CustomerDetailCreateDto request) {
+//        return customerCommandService.createCustomer(request);
+//    }
+    public CustomerReadDto createCustomer(@Valid @RequestBody CustomerCreateDto request) {
         return customerCommandService.createCustomer(request);
     }
 
     @PutMapping("/{id}")
-    public CustomerDetailDto updateCustomer(
-            @PathVariable long id,
-            @Valid @RequestBody CustomerDetailDto request) {
-        return customerCommandService.updateCustomerDetails(id, request);
+    public CustomerReadDto updateCustomer(
+            @PathVariable Long id,
+            @Valid @RequestBody CustomerUpdateDto request) {
+        return customerCommandService.updateCustomer(id, request);
     }
 
     @DeleteMapping("/{id}")

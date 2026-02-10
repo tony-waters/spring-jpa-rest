@@ -13,17 +13,18 @@ import lombok.NoArgsConstructor;
 public class ContactInfo extends BaseEntity {
 
     @Valid
-    @OneToOne(optional=false)
-    @JoinColumn(name="customer_id", unique=true)
+    @OneToOne(optional = true)
+    @JoinColumn(name="customer_id", unique=true, nullable = true)
     private Customer customer;
 
+    @NotBlank
     @Email
     @Column(length = 320, nullable = false, unique = true)
     private String email;
 
     @NotBlank
-    @Size(min = 2, max = 50)
-    @Column(length = 50, nullable = false)
+    @Size(min = 11, max = 20)
+    @Column(length = 20, nullable = false)
     private String phoneNumber;
 
     public ContactInfo(String email, String phoneNumber) {

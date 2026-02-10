@@ -84,11 +84,13 @@ public class Order extends BaseEntity {
     protected void setCustomer(Customer newCustomer) {
         if (this.customer == newCustomer) return;
         if (this.customer != null) {
-            this.customer.removeOrder(this);
+//            this.customer.removeOrder(this);
+            this.customer.removeOrderInternal(this);
         }
         this.customer = newCustomer;
         if (newCustomer != null) {
-            newCustomer.addOrder(this);
+//            newCustomer.addOrder(this);
+            newCustomer.addOrderInternal(this);
         }
     }
 

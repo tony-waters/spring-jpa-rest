@@ -11,7 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Customer extends BaseEntity {
 
     @Valid
@@ -56,14 +57,15 @@ public class Customer extends BaseEntity {
 
     public void addOrder(Order order) {
         if(order == null) return;
-        if(orders.add(order)) {
-            order.setCustomer(this);
-        }
+//        if(orders.add(order)) {
+        order.setCustomer(this);
+//        }
     }
 
     public void removeOrder(Order order) {
         if(order == null) return;
-        if(orders.remove(order)) {
+//        if(orders.remove(order)) {
+        if(orders.contains(order)) {
             order.setCustomer(null);
         }
     }
@@ -73,6 +75,15 @@ public class Customer extends BaseEntity {
         for (Order order : new HashSet<>(orders)) {
             removeOrder(order);
         }
+    }
+
+    // Package-private helpers for Order to update this collection without recursion.
+    void addOrderInternal(Order order) {
+        orders.add(order);
+    }
+
+    void removeOrderInternal(Order order) {
+        orders.remove(order);
     }
 
     public String getLastName() {
@@ -96,6 +107,9 @@ public class Customer extends BaseEntity {
     }
 
     public void setContactInfo(ContactInfo contactInfo) {
+        if (this.contactInfo == contactInfo) {
+            return;
+        };
         if (this.contactInfo != null) {
             this.contactInfo.setCustomer(null);
         }
