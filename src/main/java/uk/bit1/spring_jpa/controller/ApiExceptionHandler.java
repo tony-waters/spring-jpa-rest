@@ -13,7 +13,6 @@ import uk.bit1.spring_jpa.service.exception.NotFoundException;
 import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
@@ -75,7 +74,7 @@ public class ApiExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ApiError handleOptimisticLock(ObjectOptimisticLockingFailureException ex) {
         return new ApiError(
-                HttpStatus.CONTINUE.value(),
+                HttpStatus.CONFLICT.value(),
                 "CONFLICT",
                 "Resourse was modified by someone else. Please refresh and retry",
                 null,

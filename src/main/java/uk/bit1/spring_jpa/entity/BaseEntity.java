@@ -12,7 +12,7 @@ public abstract class BaseEntity {
 
     // Optimistic locking
     @Version
-    private long version;
+    private Long version;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
@@ -32,12 +32,11 @@ public abstract class BaseEntity {
         this.updatedAt = Instant.now();
     }
 
-
     public Long getId() {
         return id;
     }
 
-    public long getVersion() {
+    public Long getVersion() {
         return version;
     }
 

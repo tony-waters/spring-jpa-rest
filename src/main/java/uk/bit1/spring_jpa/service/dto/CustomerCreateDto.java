@@ -3,6 +3,7 @@ package uk.bit1.spring_jpa.service.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import uk.bit1.spring_jpa.validation.EmailUnique;
 
 public record CustomerCreateDto(
         @NotBlank(message = "First Name is required")
@@ -15,6 +16,7 @@ public record CustomerCreateDto(
 
         @Email(message = "Email must be valid")
         @NotBlank(message = "Email is required")
+        @EmailUnique
         String email,
 
         @NotBlank(message = "Phone Number is required")

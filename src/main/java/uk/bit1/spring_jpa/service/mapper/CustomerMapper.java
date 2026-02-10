@@ -11,7 +11,6 @@ public interface CustomerMapper {
     // Tell MapStruct how to create a Customer for CREATE
     @ObjectFactory
     default Customer newCustomer(CustomerDetailCreateDto dto) {
-        // Your constructor is (lastName, firstName)
         return new Customer(dto.lastName(), dto.firstName());
     }
 
@@ -22,16 +21,11 @@ public interface CustomerMapper {
 
     @Mapping(target = "contactInfo.email", source = "email")
     @Mapping(target = "contactInfo.phoneNumber", source = "phoneNumber")
-    Customer toEntity(CustomerDetailCreateDto dto);
+    Customer toEntity(CustomerCreateDto dto);
 
     @Mapping(target = "email", source = "contactInfo.email")
     @Mapping(target = "phoneNumber", source = "contactInfo.phoneNumber")
     @Mapping(target = "version", source = "version")
-//    CustomerDetailDto toDetailDto(Customer customer);
-//
-//    @Mapping(target = "contactInfo.email", source = "email")
-//    @Mapping(target = "contactInfo.phoneNumber", source = "phoneNumber")
-//    void updateEntityFromDto(CustomerDetailDto dto, @MappingTarget Customer entity);
     CustomerReadDto toReadDto(Customer customer);
 
     @Mapping(target = "id", ignore = true)

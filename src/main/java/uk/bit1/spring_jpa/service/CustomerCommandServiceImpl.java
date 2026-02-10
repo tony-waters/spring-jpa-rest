@@ -22,16 +22,14 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
 
-//    @Override
-//    public CustomerDetailDto createCustomer(CustomerDetailCreateDto request) {
-//        Customer entity = customerMapper.toEntity(request);
-////        entity.setContactInfo(new ContactInfo(request.email(), request.phoneNumber()));
-//        Customer saved = customerRepository.save(entity);
-//        return customerMapper.toDetailDto(saved);
-//    }
-
     @Override
     public CustomerReadDto createCustomer(CustomerCreateDto dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException("CustomerUpdateDto cannot be null");
+        }
+//        if (contactInfoRepository.existsByEmailIgnoreCase(dto.email())) {
+//            throw new ConflictException("Email already exists: " + dto.email());
+//        }
         Customer customer = new Customer();
         customerMapper.updateEntityFromCreateDto(dto, customer);
         Customer saved = customerRepository.save(customer);
@@ -39,35 +37,29 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
     }
 
     @Override
-//    public CustomerDetailDto updateCustomerDetails(long id, CustomerDetailDto customerDetailDto) {
     public CustomerReadDto updateCustomer(long id, CustomerUpdateDto dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException("CustomerUpdateDto cannot be null");
+        }
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Customer not found: id=" + id));
 
         // Client-driven optimistic locking (fast fail with a clear message)
-//        if (customerDetailDto.version() == null) {
-//            throw new IllegalArgumentException("Missing version for update (id=" + id + ")");
-//        }
-//
-//        if (customer.getVersion() != customerDetailDto.version()) {
         if (dto.version() == null) {
             throw new IllegalArgumentException("Missing version for update (id=" + id + ")");
         }
-        if (customer.getVersion() != dto.version()) {
+
+        if (customer.getVersion().equals(dto.version())) {
             throw new ConflictException(
                     "Stale version for customer id=" + id
                             + " (expected " + customer.getVersion()
-//                            + ", got " + customerDetailDto.version() + ")"
                             + ", got " + dto.version() + ")"
             );
         }
 
-        // MapStruct should copy only allowed fields.
-//        customerMapper.updateEntityFromDto(customerDetailDto, customer);
         customerMapper.updateEntityFromUpdateDto(dto, customer);
         Customer saved = customerRepository.save(customer);
-//        return customerMapper.toDetailDto(saved);
         return customerMapper.toReadDto(saved);
     }
 
