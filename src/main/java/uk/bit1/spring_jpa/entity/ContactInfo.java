@@ -1,13 +1,18 @@
 package uk.bit1.spring_jpa.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ContactInfo extends BaseEntity {
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
+//    @OneToOne
+//    @MapsId
+//    @JoinColumn(name = "id")
+    @OneToOne(optional=false)
+    @JoinColumn(name="customer_id", unique=true)
     private Customer customer;
 
     @Column(nullable = false, unique = true)
@@ -15,12 +20,12 @@ public class ContactInfo extends BaseEntity {
 
     private String phoneNumber;
 
-    protected ContactInfo() {}
-
-    // public factory method
-    public static ContactInfo create() {
-        return new ContactInfo("", "");
-    }
+//    protected ContactInfo() {}
+////    public ContactInfo() {}
+//    // public factory method
+////    public static ContactInfo create() {
+////        return new ContactInfo("", "");
+////    }
 
     public ContactInfo(String email, String phoneNumber) {
         this.email = email;

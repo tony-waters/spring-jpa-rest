@@ -1,11 +1,15 @@
 package uk.bit1.spring_jpa.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity // (name = "CustomerOrder")
 @Table(name = "customer_orders")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -24,8 +28,8 @@ public class Order extends BaseEntity {
 
     private boolean fulfilled = false;
 
-    protected Order() {
-    }
+//    protected Order() {
+//    }
 
     public Order(String description) {
         this.description = description;

@@ -18,7 +18,7 @@ public interface CustomerMapper {
 
     @ObjectFactory
     default ContactInfo newContactInfo() {
-        return ContactInfo.create();
+        return new ContactInfo(null, null);
     }
 
     @Mapping(target = "contactInfo.email", source = "email")

@@ -1,10 +1,14 @@
 package uk.bit1.spring_jpa.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Customer extends BaseEntity {
 
     @OneToOne(
@@ -12,7 +16,7 @@ public class Customer extends BaseEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private ContactInfo contactInfo;
+    private ContactInfo contactInfo; // = new ContactInfo(null, null);
 
     @OneToMany(
             mappedBy = "customer",
@@ -28,20 +32,17 @@ public class Customer extends BaseEntity {
     @Column(name = "first_name")
     private String firstName;
 
-    protected Customer() {
-        setContactInfo(ContactInfo.create());
-    }
+//    protected Customer() {}
 
     public Customer(String lastName, String firstName) {
         this.lastName= lastName;
         this.firstName = firstName;
-        setContactInfo(ContactInfo.create());
     }
 
     public Customer(String lastName, String firstName, String email, String phoneNumber) {
         this.lastName = lastName;
         this.firstName = firstName;
-        contactInfo = new ContactInfo(email, phoneNumber);
+        setContactInfo(new ContactInfo(email, phoneNumber));
     }
 
     public void addOrder(Order order) {
@@ -103,8 +104,7 @@ public class Customer extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Customer{id=" + getId() + ", firstName=" + firstName + ", lastName=" + lastName +
-                ", orderCount=" + (orders == null ? 0 : orders.size()) + "}";
+        return "Customer{id=" + getId() + ", firstName=" + firstName + ", lastName=" + lastName + "}";
     }
 
 }

@@ -1,10 +1,14 @@
 package uk.bit1.spring_jpa.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product extends BaseEntity {
 
     @ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
@@ -13,8 +17,8 @@ public class Product extends BaseEntity {
     private String name;
     private String description;
 
-    protected Product() {
-    }
+//    protected Product() {
+//    }
 
     public Product(String name, String description) {
         this.name = name;
