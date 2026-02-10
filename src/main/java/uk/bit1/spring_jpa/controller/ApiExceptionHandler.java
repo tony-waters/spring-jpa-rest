@@ -22,6 +22,7 @@ public class ApiExceptionHandler {
                 HttpStatus.NOT_FOUND.value(),
                 "NOT_FOUND",
                 ex.getMessage(),
+                null,
                 Instant.now()
         );
     }
@@ -33,21 +34,28 @@ public class ApiExceptionHandler {
                 HttpStatus.CONFLICT.value(),
                 "CONFLICT",
                 ex.getMessage(),
+                null,
                 Instant.now()
         );
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleValidation(MethodArgumentNotValidException ex) {
-        return ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .collect(Collectors.toMap(
-                        err -> err.getField(),
-                        err -> err.getDefaultMessage(),
-                        (a, b) -> a
-                ));
+    public ApiError handleValidation(MethodArgumentNotValidException ex) {
+        return new ApiError(
+                HttpStatus.CONFLICT.value(),
+                "CONFLICT",
+                ex.getMessage(),
+                ex.getBindingResult()
+                    .getFieldErrors()
+                    .stream()
+                    .collect(Collectors.toMap(
+                            err -> err.getField(),
+                            err -> err.getDefaultMessage(),
+                            (a, b) -> a
+                    )),
+                Instant.now()
+        );
     }
 }
 
