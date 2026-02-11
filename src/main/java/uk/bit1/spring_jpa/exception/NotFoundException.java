@@ -1,4 +1,4 @@
-package uk.bit1.spring_jpa.service.exception;
+package uk.bit1.spring_jpa.exception;
 
 public class NotFoundException extends RuntimeException {
 

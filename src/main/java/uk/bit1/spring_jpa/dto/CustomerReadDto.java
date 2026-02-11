@@ -1,4 +1,4 @@
-package uk.bit1.spring_jpa.service.dto;
+package uk.bit1.spring_jpa.dto;
 
 public record CustomerReadDto(
         Long id,

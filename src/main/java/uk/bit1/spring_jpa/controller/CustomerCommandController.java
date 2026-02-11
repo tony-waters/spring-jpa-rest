@@ -4,8 +4,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import uk.bit1.spring_jpa.dto.CustomerCreateDto;
+import uk.bit1.spring_jpa.dto.CustomerReadDto;
+import uk.bit1.spring_jpa.dto.CustomerUpdateDto;
 import uk.bit1.spring_jpa.service.CustomerCommandService;
-import uk.bit1.spring_jpa.service.dto.*;
 
 @RestController
 @RequestMapping("/api/customers")

@@ -1,4 +1,4 @@
-package uk.bit1.spring_jpa.controller;
+package uk.bit1.spring_jpa.controller.exception;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import uk.bit1.spring_jpa.service.exception.ConflictException;
-import uk.bit1.spring_jpa.service.exception.NotFoundException;
+import uk.bit1.spring_jpa.exception.ConflictException;
+import uk.bit1.spring_jpa.exception.NotFoundException;
 
 import java.time.Instant;
 import java.util.LinkedHashMap;

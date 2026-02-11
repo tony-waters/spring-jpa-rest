@@ -11,7 +11,7 @@ import uk.bit1.spring_jpa.repository.OrderRepository;
 import uk.bit1.spring_jpa.repository.projection.CustomerDetailView;
 import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCountView;
 import uk.bit1.spring_jpa.repository.projection.OrderWithProductCountView;
-import uk.bit1.spring_jpa.service.exception.NotFoundException;
+import uk.bit1.spring_jpa.exception.NotFoundException;
 
 @Service
 @RequiredArgsConstructor

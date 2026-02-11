@@ -1,4 +1,4 @@
-package uk.bit1.spring_jpa.controller;
+package uk.bit1.spring_jpa.controller.exception;
 
 import java.time.Instant;
 import java.util.Map;

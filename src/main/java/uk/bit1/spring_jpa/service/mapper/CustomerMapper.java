@@ -1,9 +1,11 @@
 package uk.bit1.spring_jpa.service.mapper;
 
 import org.mapstruct.*;
+import uk.bit1.spring_jpa.dto.CustomerCreateDto;
+import uk.bit1.spring_jpa.dto.CustomerDetailCreateDto;
+import uk.bit1.spring_jpa.dto.CustomerReadDto;
 import uk.bit1.spring_jpa.entity.ContactInfo;
 import uk.bit1.spring_jpa.entity.CustomerUpdateDto;
-import uk.bit1.spring_jpa.service.dto.*;
 
 @Mapper(componentModel = "spring")
 public interface CustomerMapper {
@@ -34,5 +36,5 @@ public interface CustomerMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "version", ignore = true) // JPA manages it; client version is checked in service
-    void updateEntityFromUpdateDto(uk.bit1.spring_jpa.service.dto.CustomerUpdateDto dto, @MappingTarget CustomerUpdateDto customer);
+    void updateEntityFromUpdateDto(uk.bit1.spring_jpa.dto.CustomerUpdateDto dto, @MappingTarget CustomerUpdateDto customer);
 }
