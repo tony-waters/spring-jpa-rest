@@ -15,11 +15,11 @@ public class ContactInfo extends BaseEntity {
     @Valid
     @OneToOne(optional = true)
     @JoinColumn(name="customer_id", unique=true, nullable = true)
-    private Customer customer;
+    private CustomerUpdateDto customer;
 
     @NotBlank
     @Email
-    @Column(length = 320, nullable = false, unique = true)
+    @Column(length = 320, unique = true, nullable = false)
     private String email;
 
     @NotBlank
@@ -48,11 +48,11 @@ public class ContactInfo extends BaseEntity {
         this.phoneNumber = phone;
     }
 
-    public Customer getCustomer() {
+    public CustomerUpdateDto getCustomer() {
         return customer;
     }
 
-    protected void setCustomer(Customer customer) {
+    protected void setCustomer(CustomerUpdateDto customer) {
         this.customer = customer;
     }
 
