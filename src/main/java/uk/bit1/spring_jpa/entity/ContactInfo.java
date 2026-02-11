@@ -15,7 +15,7 @@ public class ContactInfo extends BaseEntity {
     @Valid
     @OneToOne(optional = true)
     @JoinColumn(name="customer_id", unique=true, nullable = true)
-    private CustomerUpdateDto customer;
+    private Customer customer;
 
     @NotBlank
     @Email
@@ -48,11 +48,11 @@ public class ContactInfo extends BaseEntity {
         this.phoneNumber = phone;
     }
 
-    public CustomerUpdateDto getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    protected void setCustomer(CustomerUpdateDto customer) {
+    protected void setCustomer(Customer customer) {
         this.customer = customer;
     }
 

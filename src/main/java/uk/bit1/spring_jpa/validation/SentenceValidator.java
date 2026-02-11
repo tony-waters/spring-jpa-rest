@@ -14,7 +14,7 @@ public class SentenceValidator implements ConstraintValidator<Word, String> {
         if (sentence == null) {
             return true; // Let @NotBlank handle this
         }
-        String regex = "/^[\\\\p{L}\\\\p{P}]+$/u";
+        String regex = "^[\\\\p{L}\\\\p{P}\\\\s]+$";
         return sentence.matches(regex);
     }
 }

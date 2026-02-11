@@ -17,7 +17,7 @@ class EntityInvariantTest {
 
         @Test
         void addOrder_setsBothSides() {
-            CustomerUpdateDto c = new CustomerUpdateDto("Jones", "Belinda");
+            Customer c = new Customer("Jones", "Belinda");
             Order o = new Order("First order");
 
             c.addOrder(o);
@@ -28,7 +28,7 @@ class EntityInvariantTest {
 
         @Test
         void removeOrder_clearsBothSides() {
-            CustomerUpdateDto c = new CustomerUpdateDto("Smith", "Emily");
+            Customer c = new Customer("Smith", "Emily");
             Order o = new Order("Remove me");
 
             c.addOrder(o);
@@ -40,8 +40,8 @@ class EntityInvariantTest {
 
         @Test
         void setCustomer_movesOrderBetweenCustomers() {
-            CustomerUpdateDto c1 = new CustomerUpdateDto("A", "One");
-            CustomerUpdateDto c2 = new CustomerUpdateDto("B", "Two");
+            Customer c1 = new Customer("A", "One");
+            Customer c2 = new Customer("B", "Two");
             Order o = new Order("Move me");
 
             c1.addOrder(o);
@@ -58,7 +58,7 @@ class EntityInvariantTest {
 
         @Test
         void removeAllOrders_clearsBothSides() {
-            CustomerUpdateDto c = new CustomerUpdateDto("Brown", "Esther");
+            Customer c = new Customer("Brown", "Esther");
             Order o1 = new Order("One");
             Order o2 = new Order("Two");
 
@@ -127,7 +127,7 @@ class EntityInvariantTest {
 
         @Test
         void setContactInfo_linksBothSides() {
-            CustomerUpdateDto c = new CustomerUpdateDto("Waters", "Tony");
+            Customer c = new Customer("Waters", "Tony");
             ContactInfo info = new ContactInfo("tony@example.com", "07123456789");
 
             // protected: accessible because test is in same package
@@ -139,7 +139,7 @@ class EntityInvariantTest {
 
         @Test
         void replacingContactInfo_unlinksOldOne() {
-            CustomerUpdateDto c = new CustomerUpdateDto("Waters", "Tony");
+            Customer c = new Customer("Waters", "Tony");
             ContactInfo oldInfo = new ContactInfo("old@example.com", "000");
             ContactInfo newInfo = new ContactInfo("new@example.com", "111");
 
@@ -153,7 +153,7 @@ class EntityInvariantTest {
 
         @Test
         void setContactInfo_null_unlinksExisting() {
-            CustomerUpdateDto c = new CustomerUpdateDto("Waters", "Tony");
+            Customer c = new Customer("Waters", "Tony");
             ContactInfo info = new ContactInfo("tony@example.com", "07123456789");
 
             c.setContactInfo(info);
@@ -172,14 +172,14 @@ class EntityInvariantTest {
 
         @Test
         void addOrder_null_isNoOp() {
-            CustomerUpdateDto c = new CustomerUpdateDto("X", "Y");
+            Customer c = new Customer("X", "Y");
             c.addOrder(null);
             assertTrue(c.getOrders().isEmpty());
         }
 
         @Test
         void removeOrder_null_isNoOp() {
-            CustomerUpdateDto c = new CustomerUpdateDto("X", "Y");
+            Customer c = new Customer("X", "Y");
             c.removeOrder(null);
             assertTrue(c.getOrders().isEmpty());
         }
@@ -200,7 +200,7 @@ class EntityInvariantTest {
 
         @Test
         void addSameOrderTwice_isIdempotent() {
-            CustomerUpdateDto c = new CustomerUpdateDto("X", "Y");
+            Customer c = new Customer("X", "Y");
             Order o = new Order("Same");
 
             c.addOrder(o);
@@ -224,7 +224,7 @@ class EntityInvariantTest {
 
         @Test
         void removeNonMemberOrder_isNoOp() {
-            CustomerUpdateDto c = new CustomerUpdateDto("X", "Y");
+            Customer c = new Customer("X", "Y");
             Order o = new Order("Not added");
 
             c.removeOrder(o);
@@ -246,7 +246,7 @@ class EntityInvariantTest {
 
         @Test
         void setCustomer_null_detachesFromOldCustomer() {
-            CustomerUpdateDto c = new CustomerUpdateDto("X", "Y");
+            Customer c = new Customer("X", "Y");
             Order o = new Order("Detach");
 
             c.addOrder(o);
@@ -261,7 +261,7 @@ class EntityInvariantTest {
 
         @Test
         void publicCollectionGetters_areUnmodifiable() {
-            CustomerUpdateDto c = new CustomerUpdateDto("X", "Y");
+            Customer c = new Customer("X", "Y");
             Order o = new Order("Test");
             c.addOrder(o);
 

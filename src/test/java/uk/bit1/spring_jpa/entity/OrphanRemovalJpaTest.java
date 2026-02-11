@@ -17,7 +17,7 @@ class OrphanRemovalJpaTest {
     @Test
     void orphanRemoval_removingOrderFromCustomer_deletesOrderRow() {
         // create graph
-        CustomerUpdateDto customer = new CustomerUpdateDto("Smith", "Emily");
+        Customer customer = new Customer("Smith", "Emily");
         Order order = new Order("Orphan me");
         customer.addOrder(order);
 
@@ -29,7 +29,7 @@ class OrphanRemovalJpaTest {
         assertThat(orderId).isNotNull();
 
         // IMPORTANT: operate on managed entities
-        CustomerUpdateDto managedCustomer = entityManager.find(CustomerUpdateDto.class, customer.getId());
+        Customer managedCustomer = entityManager.find(Customer.class, customer.getId());
         Order managedOrder = entityManager.find(Order.class, orderId);
 
         // remove from the parent's collection (entity method maintains both sides)
@@ -45,7 +45,7 @@ class OrphanRemovalJpaTest {
 
     @Test
     void orphanRemoval_removingContactInfoFromCustomer_deletesContactInfoRow() {
-        CustomerUpdateDto customer = new CustomerUpdateDto("Waters", "Tony");
+        Customer customer = new Customer("Waters", "Tony");
         ContactInfo contactInfo = new ContactInfo("tony@example.com", "07123456789");
         customer.setContactInfo(contactInfo); // protected; test is in same package
 
@@ -55,7 +55,7 @@ class OrphanRemovalJpaTest {
         Long contactId = contactInfo.getId();
         assertThat(contactId).isNotNull();
 
-        CustomerUpdateDto managedCustomer = entityManager.find(CustomerUpdateDto.class, customer.getId());
+        Customer managedCustomer = entityManager.find(Customer.class, customer.getId());
         managedCustomer.setContactInfo(null);
 
         entityManager.flush();
@@ -73,7 +73,7 @@ class OrphanRemovalJpaTest {
         entityManager.persist(product1);
         entityManager.persist(product2);
 
-        CustomerUpdateDto customer = new CustomerUpdateDto("Brown", "Esther");
+        Customer customer = new Customer("Brown", "Esther");
         Order order = new Order("Shopping");
         customer.addOrder(order);
 
@@ -97,7 +97,7 @@ class OrphanRemovalJpaTest {
         assertThat(before).isEqualTo(2L);
 
         // Trigger deletion of Order via orphanRemoval by removing it from the Customer aggregate
-        CustomerUpdateDto managedCustomer = entityManager.find(CustomerUpdateDto.class, customer.getId());
+        Customer managedCustomer = entityManager.find(Customer.class, customer.getId());
         Order managedOrder = entityManager.find(Order.class, orderId);
         managedCustomer.removeOrder(managedOrder);
 
@@ -124,7 +124,7 @@ class OrphanRemovalJpaTest {
         entityManager.persist(product1);
         entityManager.persist(product2);
 
-        CustomerUpdateDto customer = new CustomerUpdateDto("Brown", "Esther");
+        Customer customer = new Customer("Brown", "Esther");
         Order order = new Order("Shopping");
         customer.addOrder(order);
 

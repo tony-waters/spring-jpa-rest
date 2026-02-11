@@ -18,7 +18,7 @@ public class Order extends BaseEntity {
     @Valid
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
-    private CustomerUpdateDto customer;
+    private Customer customer;
 
     @Valid
     @ManyToMany(fetch = FetchType.LAZY)
@@ -77,11 +77,11 @@ public class Order extends BaseEntity {
         this.fulfilled = fulfilled;
     }
 
-    public CustomerUpdateDto getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    protected void setCustomer(CustomerUpdateDto newCustomer) {
+    protected void setCustomer(Customer newCustomer) {
         if (this.customer == newCustomer) return;
         if (this.customer != null) {
 //            this.customer.removeOrder(this);

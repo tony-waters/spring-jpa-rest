@@ -5,15 +5,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import uk.bit1.spring_jpa.entity.CustomerUpdateDto;
+import uk.bit1.spring_jpa.entity.Customer;
 import uk.bit1.spring_jpa.repository.projection.CustomerDetailView;
 import uk.bit1.spring_jpa.repository.projection.CustomerWithOrderCountView;
 
 import java.util.Optional;
 
-public interface CustomerRepository extends JpaRepository<CustomerUpdateDto, Long> {
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    Page<CustomerUpdateDto> findByLastNameContainingIgnoreCase(String lastName, Pageable pageable);
+    Page<Customer> findByLastNameContainingIgnoreCase(String lastName, Pageable pageable);
 
     // Fetch graphs (use when you know you need relationships)
 //    @EntityGraph(attributePaths = {"orders"})
@@ -32,12 +32,12 @@ public interface CustomerRepository extends JpaRepository<CustomerUpdateDto, Lon
                        c.firstName as firstName,
                        c.lastName as lastName,
                        count(o.id) as orderCount
-                from CustomerUpdateDto c
+                from Customer c
                 left join c.orders o
                 group by c.id, c.firstName, c.lastName
                 order by c.lastName, c.id
             """,
-            countQuery = "select count(c) from CustomerUpdateDto c"
+            countQuery = "select count(c) from Customer c"
     )
     Page<CustomerWithOrderCountView> findAllCustomerWithOrderCount(Pageable pageable);
 

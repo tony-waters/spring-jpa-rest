@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class CustomerUpdateDto extends BaseEntity {
+public class Customer extends BaseEntity {
 
     @Valid
     @OneToOne(
@@ -44,12 +44,12 @@ public class CustomerUpdateDto extends BaseEntity {
 
 //    protected Customer() {}
 
-    public CustomerUpdateDto(String lastName, String firstName) {
+    public Customer(String lastName, String firstName) {
         this.lastName= lastName;
         this.firstName = firstName;
     }
 
-    public CustomerUpdateDto(String lastName, String firstName, String email, String phoneNumber) {
+    public Customer(String lastName, String firstName, String email, String phoneNumber) {
         this.lastName = lastName;
         this.firstName = firstName;
         setContactInfo(new ContactInfo(email, phoneNumber));
