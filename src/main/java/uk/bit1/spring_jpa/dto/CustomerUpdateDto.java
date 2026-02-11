@@ -4,14 +4,14 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import uk.bit1.spring_jpa.validation.CustomerLocked;
+//import uk.bit1.spring_jpa.validation.CustomerLocked;
 import uk.bit1.spring_jpa.validation.Word;
 
 public record CustomerUpdateDto(
 
         // required for optimistic locking
         @NotNull(message = "Version is required")
-        @CustomerLocked
+//        @CustomerLocked
         Long version,
 
         @NotBlank(message = "First Name is required")
